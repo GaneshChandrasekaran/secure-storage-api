@@ -7,6 +7,12 @@ namespace App\Infrastructure\Api\Controller;
 use App\Domain\Exception\ItemNotFoundException;
 use App\Service\ItemService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Swagger\Annotations\Items;
+use Swagger\Annotations\Parameter;
+use Swagger\Annotations\Property;
+use Swagger\Annotations\Response as SwaggerResponse;
+use Swagger\Annotations\Schema;
+use Swagger\Annotations\Tag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +31,49 @@ class ItemController extends AbstractController
 
     /**
      * @Route("/item", name="item_list", methods={"GET"})
+     *
+     * @SwaggerResponse(
+     *     response=200,
+     *     description="",
+     *     @Schema(
+     *       type="object",
+     *       @Property(property="id", type="integer"),
+     *       @Property(property="data", type="string"),
+     *       @Property(
+     *          property="created_at",
+     *          type="object",
+     *          @Property(property="date", type="string"),
+     *          @Property(property="timezone_type", type="integer"),
+     *          @Property(property="timezone", type="string")
+     *       ),
+     *       @Property(
+     *          property="updated_at",
+     *          type="object",
+     *          @Property(property="date", type="string"),
+     *          @Property(property="timezone_type", type="integer"),
+     *          @Property(property="timezone", type="string")
+     *       )
+     *     )
+     * )
+     *
+     *  @SwaggerResponse(
+     *     response=401,
+     *     description="",
+     *     @Schema(
+     *       type="object",
+     *       @Property(property="error", type="string")
+     *     )
+     * )
+     *
+     * @SwaggerResponse(
+     *     response=500,
+     *     description="",
+     *     @Schema(
+     *       type="object",
+     *       @Property(property="error", type="string")
+     *     )
+     * )
+     * @Tag(name="Manage items")
      *
      * @IsGranted("ROLE_USER")
      */
@@ -51,6 +100,52 @@ class ItemController extends AbstractController
     /**
      * @Route("/item", name="item_create", methods={"POST"})
      *
+     * @Parameter(
+     *   name="data",
+     *   in="formData",
+     *   type="string",
+     *   required=true
+     * )
+     *
+     * @SwaggerResponse(
+     *     response=200,
+     *     description="",
+     *     @Schema(
+     *       type="array",
+     *       @Items(
+     *       ),
+     *      example={}
+     *     )
+     * )
+     *
+     * @SwaggerResponse(
+     *     response=400,
+     *     description="",
+     *     @Schema(
+     *       type="object",
+     *       @Property(property="error", type="string")
+     *     )
+     * )
+     *
+     *  @SwaggerResponse(
+     *     response=401,
+     *     description="",
+     *     @Schema(
+     *       type="object",
+     *       @Property(property="error", type="string")
+     *     )
+     * )
+     *
+     * @SwaggerResponse(
+     *     response=500,
+     *     description="",
+     *     @Schema(
+     *       type="object",
+     *       @Property(property="error", type="string")
+     *     )
+     * )
+     * @Tag(name="Manage items")
+     *
      * @IsGranted("ROLE_USER")
      */
     public function create(Request $request): JsonResponse
@@ -72,6 +167,53 @@ class ItemController extends AbstractController
 
     /**
      * @Route("/item/{id}", name="items_delete", methods={"DELETE"})
+     *
+     * @Parameter(
+     *   name="id",
+     *   in="path",
+     *   type="integer",
+     *   required=true
+     * )
+     *
+     * @SwaggerResponse(
+     *     response=200,
+     *     description="",
+     *     @Schema(
+     *       type="array",
+     *       @Items(
+     *         type="string"
+     *       ),
+     *      example={}
+     *     )
+     * )
+     *
+     * @SwaggerResponse(
+     *     response=400,
+     *     description="",
+     *     @Schema(
+     *       type="object",
+     *       @Property(property="error", type="string")
+     *     )
+     * )
+     *
+     *  @SwaggerResponse(
+     *     response=401,
+     *     description="",
+     *     @Schema(
+     *       type="object",
+     *       @Property(property="error", type="string")
+     *     )
+     * )
+     *
+     * @SwaggerResponse(
+     *     response=500,
+     *     description="",
+     *     @Schema(
+     *       type="object",
+     *       @Property(property="error", type="string")
+     *     )
+     * )
+     * @Tag(name="Manage items")
      *
      * @IsGranted("ROLE_USER")
      */
