@@ -2,7 +2,7 @@ security:
     providers:
         app_user_provider:
             entity:
-                class: App\Entity\User
+                class: App\Domain\Entity\User
                 property: username
     firewalls:
         dev:
@@ -18,5 +18,5 @@ security:
                 check_path: /login
 
     encoders:
-        App\Entity\User:
+        App\Domain\Entity\User:
             algorithm: bcrypt
