@@ -4,9 +4,17 @@
 
 * Add `secure-storage.localhost` to your `/etc/hosts`: `127.0.0.1 secure-storage.localhost`
 
+* Navigate to `docker/nginx/` directory
+
+* Run `brew install mkcert`
+
+* Run `mkcert -install`
+
+* Run `mkcert secure-storage.localhost`
+
 * Run `make init` to initialize project
 
-* Open in browser: http://secure-storage.localhost:8000/item Should get `Full authentication is required to access this resource.` error, because first you need to make `login` call (see `postman_collection.json` or `SecurityController` for more info).
+* Open in browser: https://secure-storage.localhost/item Should get `Full authentication is required to access this resource.` error, because first you need to make `login` call (see `postman_collection.json` or `SecurityController` for more info).
 
 ### Run tests
 

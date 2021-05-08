@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "61b35858-b265-494e-b019-e0377c4352bc",
-		"name": "PHP test",
+		"name": "Secure Storage API Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -21,13 +21,12 @@
 					"raw": "{\n    \"username\": \"john\",\n    \"password\": \"maxsecure\"\n}"
 				},
 				"url": {
-					"raw": "http://secure-storage.localhost:8000/login",
-					"protocol": "http",
+					"raw": "https://secure-storage.localhost/login",
+					"protocol": "https",
 					"host": [
 						"secure-storage",
 						"localhost"
 					],
-					"port": "8000",
 					"path": [
 						"login"
 					]
@@ -51,13 +50,12 @@
 					"raw": "{\n    \"username\": \"john\",\n    \"password\": \"maxsecure\"\n}"
 				},
 				"url": {
-					"raw": "http://secure-storage.localhost:8000/logout",
-					"protocol": "http",
+					"raw": "https://secure-storage.localhost/logout",
+					"protocol": "https",
 					"host": [
 						"secure-storage",
 						"localhost"
 					],
-					"port": "8000",
 					"path": [
 						"logout"
 					]
@@ -71,13 +69,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://secure-storage.localhost:8000/item",
-					"protocol": "http",
+					"raw": "https://secure-storage.localhost/item",
+					"protocol": "https",
 					"host": [
 						"secure-storage",
 						"localhost"
 					],
-					"port": "8000",
 					"path": [
 						"item"
 					]
@@ -101,13 +98,12 @@
 					]
 				},
 				"url": {
-					"raw": "http://secure-storage.localhost:8000/item",
-					"protocol": "http",
+					"raw": "https://secure-storage.localhost/item",
+					"protocol": "https",
 					"host": [
 						"secure-storage",
 						"localhost"
 					],
-					"port": "8000",
 					"path": [
 						"item"
 					]
@@ -136,13 +132,12 @@
 					]
 				},
 				"url": {
-					"raw": "http://secure-storage.localhost:8000/item",
-					"protocol": "http",
+					"raw": "https://secure-storage.localhost/item",
+					"protocol": "https",
 					"host": [
 						"secure-storage",
 						"localhost"
 					],
-					"port": "8000",
 					"path": [
 						"item"
 					]
@@ -156,13 +151,12 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://secure-storage.localhost:8000/item/1",
-					"protocol": "http",
+					"raw": "https://secure-storage.localhost/item/1",
+					"protocol": "https",
 					"host": [
 						"secure-storage",
 						"localhost"
 					],
-					"port": "8000",
 					"path": [
 						"item",
 						"1"
