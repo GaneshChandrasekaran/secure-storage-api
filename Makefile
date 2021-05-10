@@ -6,6 +6,16 @@ start:
 stop:
 	docker-compose stop
 
+down:
+	docker-compose down --remove-orphans
+
+logs:
+	docker-compose logs
+
+
+ls:
+	docker container ls
+
 init:
 	docker-compose build
 	docker-compose up -d
@@ -15,7 +25,7 @@ init:
 	docker-compose exec php php bin/console doctrine:fixtures:load --no-interaction
 
 build:
-	build/build.sh
+	docker-compose build
 
 tests:
 	docker-compose exec php php vendor/bin/simple-phpunit
