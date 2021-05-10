@@ -91,29 +91,23 @@ class ItemControllerTest extends WebTestCase
         $client->loginUser($user);
 
         $data = 'very secure new item data';
-
         $newItemData = ['data' => $data];
-
         $client->request('POST', '/item', $newItemData);
         $this->assertResponseStatusCodeSame(JsonResponse::HTTP_CREATED);
 
         $client->request('GET', '/item');
         $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
-
         $responseArray = json_decode($client->getResponse()->getContent(), true);
         $this->assertSame('very secure new item data', $responseArray[0]['data']);
         $this->assertSame(1, count($responseArray));
 
         $data = 'very secure new item data 2';
-
         $newItemData = ['data' => $data];
-
         $client->request('POST', '/item', $newItemData);
         $this->assertResponseStatusCodeSame(JsonResponse::HTTP_CREATED);
 
         $client->request('GET', '/item');
         $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
-
         $responseArray = json_decode($client->getResponse()->getContent(), true);
         $this->assertSame(2, count($responseArray));
     }
@@ -171,10 +165,10 @@ class ItemControllerTest extends WebTestCase
         $client->request('GET', '/item');
         $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
         $responseArray = json_decode($client->getResponse()->getContent(), true);
-        var_dump($responseArray);
-        $this->assertSame(2, count($responseArray));
 
-        $client->request('DELETE', '/item/1');
+        $itemId = $responseArray[0]['id'];
+
+        $client->request('DELETE', '/item/'.$itemId);
         $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
 
         $client->request('GET', '/item');

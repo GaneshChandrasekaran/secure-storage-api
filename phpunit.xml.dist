@@ -6,7 +6,12 @@
          backupGlobals="false"
          colors="true"
          bootstrap="tests/bootstrap.php"
+
 >
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
+    </extensions>
+
     <php>
         <ini name="error_reporting" value="-1" />
         <env name="APP_ENV" value="test" force="true" />
@@ -28,9 +33,6 @@
 <!--         DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7" -->
         <!-- ###- doctrine/doctrine-bundle ### -->
     </php>
-    <extensions>
-        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
-    </extensions>
 
     <testsuites>
         <testsuite name="Project Test Suite">
