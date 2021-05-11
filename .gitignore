@@ -14,3 +14,7 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+docker/mysql/**
+docker/nginx/secure-storage.localhost.pem
+docker/nginx/secure-storage.localhost-key.pem
