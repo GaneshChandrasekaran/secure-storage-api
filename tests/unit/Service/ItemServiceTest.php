@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Tests\Unit;
+namespace App\Tests\Unit\Service;
 
-use App\Entity\Item;
-use App\Entity\User;
+use App\Domain\Entity\Item;
+use App\Domain\Entity\User;
+use App\Domain\Exception\ItemNotFoundException;
+use App\Infrastructure\Repository\ItemRepository;
 use App\Service\ItemService;
 use PHPUnit\Framework\TestCase;
-use Doctrine\ORM\EntityManagerInterface;
-use PHPUnit\Framework\MockObject\MockObject;
 
 class ItemServiceTest extends TestCase
 {
     /**
-     * @var EntityManagerInterface|MockObject
+     * @var ItemRepository
      */
-    private $entityManager;
+    private $repository;
 
     /**
      * @var ItemService
@@ -23,10 +23,9 @@ class ItemServiceTest extends TestCase
 
     public function setUp(): void
     {
-        /** @var EntityManagerInterface */
-        $this->entityManager = $this->createMock(EntityManagerInterface::class);
-        
-        $this->itemService = new ItemService($this->entityManager);
+        $this->repository = $this->createMock(ItemRepository::class);
+
+        $this->itemService = new ItemService($this->repository);
     }
 
     public function testCreate(): void
@@ -35,11 +34,46 @@ class ItemServiceTest extends TestCase
         $user = $this->createMock(User::class);
         $data = 'secret data';
 
-        $expectedObject = new Item();
-        $expectedObject->setUser($user);
-
-        $this->entityManager->expects($this->once())->method('persist')->with($expectedObject);
+        $this->repository->expects($this->once())->method('persist')->withAnyParameters();
 
         $this->itemService->create($user, $data);
+    }
+
+    public function testFindByUser(): void
+    {
+        /** @var User */
+        $user = $this->createMock(User::class);
+
+        $this->repository->expects($this->once())->method('findBy')->with(['user' => $user])->willReturn([]);
+
+        $this->itemService->findByUser($user);
+    }
+
+    public function testFind(): void
+    {
+        $this->repository->expects($this->once())->method('find')->with(1);
+
+        $this->itemService->find(1);
+    }
+
+    public function testRemoveSuccessful(): void
+    {
+        $itemMock = $user = $this->createMock(Item::class);
+        $this->repository->expects($this->once())->method('find')->with(1)->willReturn($itemMock);
+
+        $this->repository->expects($this->once())->method('remove')->with($itemMock);
+
+        $this->itemService->remove(1);
+    }
+
+    public function testRemoveThrowsExcpetion(): void
+    {
+        $this->expectException(ItemNotFoundException::class);
+
+        $this->repository->expects($this->once())->method('find')->with(1)->willReturn(null);
+
+        $this->repository->expects($this->never())->method('remove')->withAnyParameters();
+
+        $this->itemService->remove(1);
     }
 }
