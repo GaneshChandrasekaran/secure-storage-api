@@ -108,7 +108,7 @@ class ItemController extends AbstractController
      * )
      *
      * @SwaggerResponse(
-     *     response=201,
+     *     response=200,
      *     description="",
      *     @Schema(
      *       type="array",
@@ -162,7 +162,7 @@ class ItemController extends AbstractController
             return $this->json(['error' => 'Internal error occurred. Please try again later.'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->json([], JsonResponse::HTTP_CREATED);
+        return $this->json([], JsonResponse::HTTP_OK);
     }
 
     /**

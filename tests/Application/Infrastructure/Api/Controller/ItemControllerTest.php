@@ -2,8 +2,8 @@
 
 namespace App\Tests\Application\Infrastructure\Api\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Infrastructure\Repository\UserRepository;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ItemControllerTest extends WebTestCase
@@ -23,7 +23,7 @@ class ItemControllerTest extends WebTestCase
         $newItemData = ['data' => $data];
 
         $client->request('POST', '/item', $newItemData);
-        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_CREATED);
+        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
 
         $client->request('GET', '/item');
         $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
@@ -93,7 +93,7 @@ class ItemControllerTest extends WebTestCase
         $data = 'very secure new item data';
         $newItemData = ['data' => $data];
         $client->request('POST', '/item', $newItemData);
-        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_CREATED);
+        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
 
         $client->request('GET', '/item');
         $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
@@ -104,7 +104,7 @@ class ItemControllerTest extends WebTestCase
         $data = 'very secure new item data 2';
         $newItemData = ['data' => $data];
         $client->request('POST', '/item', $newItemData);
-        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_CREATED);
+        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
 
         $client->request('GET', '/item');
         $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
@@ -155,12 +155,12 @@ class ItemControllerTest extends WebTestCase
         $data = 'very secure new item data';
         $newItemData = ['data' => $data];
         $client->request('POST', '/item', $newItemData);
-        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_CREATED);
+        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
 
         $data = 'very secure new item data 2';
         $newItemData = ['data' => $data];
         $client->request('POST', '/item', $newItemData);
-        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_CREATED);
+        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
 
         $client->request('GET', '/item');
         $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
@@ -176,6 +176,48 @@ class ItemControllerTest extends WebTestCase
         $responseArray = json_decode($client->getResponse()->getContent(), true);
         $this->assertSame(1, count($responseArray));
         $this->assertSame('very secure new item data 2', $responseArray[0]['data']);
+    }
 
+    public function testWhenTwoUsersLoginAndCreateItemsOnlyTheirItemsAreReturned()
+    {
+        $client = static::createClient();
+
+        $userRepository = static::$container->get(UserRepository::class);
+
+        $user = $userRepository->findOneByUsername('john');
+
+        $client->loginUser($user);
+
+        $data = 'very secure new item data for john';
+
+        $newItemData = ['data' => $data];
+
+        $client->request('POST', '/item', $newItemData);
+        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
+
+        $client->request('GET', '/item');
+        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
+
+        $responseArray = json_decode($client->getResponse()->getContent(), true);
+        $this->assertSame('very secure new item data for john', $responseArray[0]['data']);
+
+
+        $user = $userRepository->findOneByUsername('diya');
+
+        $client->loginUser($user);
+
+        $data = 'very secure new item data for diya';
+
+        $newItemData = ['data' => $data];
+
+        $client->request('POST', '/item', $newItemData);
+        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
+
+        $client->request('GET', '/item');
+        $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
+
+        $responseArray = json_decode($client->getResponse()->getContent(), true);
+        $this->assertSame(1, count($responseArray));
+        $this->assertSame('very secure new item data for diya', $responseArray[0]['data']);
     }
 }

@@ -23,9 +23,13 @@ class UserFixture extends Fixture
         $user = new User();
         $user->setUsername('john');
         $user->setPassword($this->encoder->encodePassword($user, 'maxsecure'));
-
         $manager->persist($user);
-         
+        $manager->flush();
+
+        $user = new User();
+        $user->setUsername('diya');
+        $user->setPassword($this->encoder->encodePassword($user, 'verysecure'));
+        $manager->persist($user);
         $manager->flush();
     }
 }
