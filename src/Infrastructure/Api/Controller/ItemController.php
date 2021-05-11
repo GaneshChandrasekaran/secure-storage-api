@@ -97,6 +97,7 @@ class ItemController extends AbstractController
         $response = $this->json($allItems);
         $response->setPublic();
         $response->setMaxAge(60);
+        $response->setVary('cookie');
         $response->headers->addCacheControlDirective('must-revalidate', true);
 
         return $response;
