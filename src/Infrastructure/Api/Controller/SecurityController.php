@@ -71,10 +71,16 @@ class SecurityController extends AbstractController
     {
         $user = $this->getUser();
 
-        return $this->json([
+        $response = $this->json([
             'username' => $user->getUsername(),
             'roles' => $user->getRoles(),
         ]);
+
+        $response->setPublic();
+        $response->setMaxAge(60);
+        $response->setVary('cookie');
+
+        return $response;
     }
 
     /**

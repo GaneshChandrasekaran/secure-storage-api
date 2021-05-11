@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
 use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
@@ -95,10 +96,10 @@ class ItemController extends AbstractController
         }
 
         $response = $this->json($allItems);
+        $response->headers->set(AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER, 'true');
         $response->setPublic();
         $response->setMaxAge(60);
         $response->setVary('cookie');
-        $response->headers->addCacheControlDirective('must-revalidate', true);
 
         return $response;
     }
