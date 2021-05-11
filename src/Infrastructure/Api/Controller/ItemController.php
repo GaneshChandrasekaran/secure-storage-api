@@ -17,11 +17,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
 use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
 class ItemController extends AbstractController
 {
+    private const CACHE_TIME_ONE_MINUTE_IN_SECONDS = 60;
     private $itemService;
 
     public function __construct(ItemService $itemService)
@@ -30,7 +32,7 @@ class ItemController extends AbstractController
     }
 
     /**
-     * @Route("/item", name="item_list", methods={"GET"})
+     * @Route("/item", methods={"GET"})
      *
      * @SwaggerResponse(
      *     response=200,
@@ -94,7 +96,13 @@ class ItemController extends AbstractController
             $allItems[] = $oneItem;
         }
 
-        return $this->json($allItems);
+        $response = $this->json($allItems);
+        $response->headers->set(AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER, 'true');
+        $response->setPublic();
+        $response->setMaxAge(self::CACHE_TIME_ONE_MINUTE_IN_SECONDS);
+        $response->setVary('cookie');
+
+        return $response;
     }
 
     /**

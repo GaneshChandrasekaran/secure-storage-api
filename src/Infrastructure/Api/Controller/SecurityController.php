@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SecurityController extends AbstractController
 {
+    private const CACHE_TIME_ONE_MINUTE_IN_SECONDS = 60;
     /**
      * @Route("/login", name="login", methods={"POST"})
      *
@@ -71,10 +72,16 @@ class SecurityController extends AbstractController
     {
         $user = $this->getUser();
 
-        return $this->json([
+        $response = $this->json([
             'username' => $user->getUsername(),
             'roles' => $user->getRoles(),
         ]);
+
+        $response->setPublic();
+        $response->setMaxAge(self::CACHE_TIME_ONE_MINUTE_IN_SECONDS);
+        $response->setVary('cookie');
+
+        return $response;
     }
 
     /**
