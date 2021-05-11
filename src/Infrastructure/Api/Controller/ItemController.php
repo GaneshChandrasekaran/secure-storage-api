@@ -30,7 +30,7 @@ class ItemController extends AbstractController
     }
 
     /**
-     * @Route("/item", name="item_list", methods={"GET"})
+     * @Route("/item", methods={"GET"})
      *
      * @SwaggerResponse(
      *     response=200,
@@ -94,7 +94,12 @@ class ItemController extends AbstractController
             $allItems[] = $oneItem;
         }
 
-        return $this->json($allItems);
+        $response = $this->json($allItems);
+        $response->setPublic();
+        $response->setMaxAge(60);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+
+        return $response;
     }
 
     /**
