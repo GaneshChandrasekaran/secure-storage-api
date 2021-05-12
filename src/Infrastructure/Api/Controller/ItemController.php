@@ -7,7 +7,6 @@ namespace App\Infrastructure\Api\Controller;
 use App\Domain\Exception\ItemNotFoundException;
 use App\Service\ItemService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Swagger\Annotations as SWG;
 use Swagger\Annotations\Items;
 use Swagger\Annotations\Parameter;
 use Swagger\Annotations\Property;
