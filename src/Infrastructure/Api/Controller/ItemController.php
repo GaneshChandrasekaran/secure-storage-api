@@ -7,6 +7,7 @@ namespace App\Infrastructure\Api\Controller;
 use App\Domain\Exception\ItemNotFoundException;
 use App\Service\ItemService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Swagger\Annotations as SWG;
 use Swagger\Annotations\Items;
 use Swagger\Annotations\Parameter;
 use Swagger\Annotations\Property;
@@ -38,22 +39,25 @@ class ItemController extends AbstractController
      *     response=200,
      *     description="",
      *     @Schema(
-     *       type="object",
-     *       @Property(property="id", type="integer"),
-     *       @Property(property="data", type="string"),
-     *       @Property(
-     *          property="created_at",
-     *          type="object",
-     *          @Property(property="date", type="string"),
-     *          @Property(property="timezone_type", type="integer"),
-     *          @Property(property="timezone", type="string")
-     *       ),
-     *       @Property(
-     *          property="updated_at",
-     *          type="object",
-     *          @Property(property="date", type="string"),
-     *          @Property(property="timezone_type", type="integer"),
-     *          @Property(property="timezone", type="string")
+     *       type="array",
+     *       @Items(
+     *         type="object",
+     *         @Property(property="id", type="integer"),
+     *         @Property(property="data", type="string"),
+     *         @Property(
+     *         property="created_at",
+     *         type="object",
+     *         @Property(property="date", type="string"),
+     *         @Property(property="timezone_type", type="integer"),
+     *         @Property(property="timezone", type="string")
+     *         ),
+     *         @Property(
+     *         property="updated_at",
+     *         type="object",
+     *         @Property(property="date", type="string"),
+     *         @Property(property="timezone_type", type="integer"),
+     *         @Property(property="timezone", type="string")
+     *         )
      *       )
      *     )
      * )
