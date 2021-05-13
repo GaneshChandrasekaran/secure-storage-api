@@ -1,3 +1,5 @@
+[![Build status](https://badge.buildkite.com/93a54ac419c1a6e17ca5b3118a7e9c168ff1aee26aa42af91a.svg)](https://buildkite.com/gchub/secure-storage-api)
+
 # Secure Information Storage REST API
 
 ### Project setup
