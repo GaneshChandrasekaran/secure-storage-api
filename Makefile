@@ -12,9 +12,14 @@ down:
 logs:
 	docker-compose logs
 
-
 ls:
 	docker container ls
+
+cs:
+	docker-compose exec php php vendor/bin/phpcs
+
+cbf:
+	docker-compose exec php php vendor/bin/phpcbf
 
 init:
 	docker-compose build

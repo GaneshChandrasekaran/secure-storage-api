@@ -87,7 +87,10 @@ class ItemController extends AbstractController
         try {
             $items = $this->itemService->findByUser($this->getUser());
         } catch (Throwable $exception) {
-            return $this->json(['error' => 'Internal error occurred. Please try again later.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->json(
+                ['error' => 'Internal error occurred. Please try again later.'],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
 
         $allItems = [];
@@ -170,7 +173,10 @@ class ItemController extends AbstractController
         try {
             $this->itemService->create($this->getUser(), $data);
         } catch (Throwable $exception) {
-            return $this->json(['error' => 'Internal error occurred. Please try again later.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->json(
+                ['error' => 'Internal error occurred. Please try again later.'],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
 
         return $this->json([], JsonResponse::HTTP_OK);
@@ -239,7 +245,10 @@ class ItemController extends AbstractController
         } catch (ItemNotFoundException $exception) {
             return $this->json(['error' => 'Item not found.'], Response::HTTP_BAD_REQUEST);
         } catch (Throwable $exception) {
-            return $this->json(['error' => 'Internal error occurred. Please try again later.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->json(
+                ['error' => 'Internal error occurred. Please try again later.'],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
 
         return $this->json([]);

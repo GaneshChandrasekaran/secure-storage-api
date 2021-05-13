@@ -17,18 +17,20 @@ class ItemRepository extends ServiceEntityRepository
 {
     private $entityManager;
 
-    public function __construct(ManagerRegistry $registry , EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
         parent::__construct($registry, Item::class);
     }
 
-    public function persist(Item $item): void {
+    public function persist(Item $item): void
+    {
         $this->entityManager->persist($item);
         $this->entityManager->flush();
     }
 
-    public function remove(Item $item): void {
+    public function remove(Item $item): void
+    {
         $this->entityManager->remove($item);
         $this->entityManager->flush();
     }
