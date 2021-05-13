@@ -17,7 +17,7 @@ class ItemControllerTest extends WebTestCase
         $user = $userRepository->findOneByUsername('john');
 
         $client->loginUser($user);
-        
+
         $data = 'very secure new item data';
 
         $newItemData = ['data' => $data];
@@ -168,7 +168,7 @@ class ItemControllerTest extends WebTestCase
 
         $itemId = $responseArray[0]['id'];
 
-        $client->request('DELETE', '/item/'.$itemId);
+        $client->request('DELETE', '/item/' . $itemId);
         $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
 
         $client->request('GET', '/item');

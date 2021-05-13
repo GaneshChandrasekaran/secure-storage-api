@@ -18,3 +18,8 @@
 docker/mysql/**
 docker/nginx/secure-storage.localhost.pem
 docker/nginx/secure-storage.localhost-key.pem
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###
